@@ -118,6 +118,43 @@ class _MyHomePageState extends State {
     );
   }
 
+  Future<Image> createImage(XFile imageFile) async {
+    debugPrint(imageFile.path);
+    File file = File.fromUri(Uri.file(imageFile.path));
+    return Image.memory(file.readAsBytesSync());
+  }
+
+  Future saveImage(XFile imageFile, String fileName) async {
+    Directory directory = await getApplicationDocumentsDirectory();
+    String path = directory.path;
+
+    File file = File.fromUri(Uri.file(imageFile.path));
+    File saveFile = File('$path/$fileName');
+    await saveFile.writeAsBytes(await file.readAsBytes());
+  }
+
+  Future<Image?> loadImage(String fileName) async {
+    Directory directory = await getApplicationDocumentsDirectory();
+    String path = directory.path;
+
+    File file = File('$path/$fileName');
+    if( file.existsSync() ) {
+      return Image.memory(file.readAsBytesSync());
+    }
+    return null;
+  }
+
+  Future deleteImage(XFile imageFile) async {
+    File file = File.fromUri(Uri.file(imageFile.path));
+    try {
+      debugPrint(imageFile.path);
+      await file.delete();
+      debugPrint("DELETE OK");
+    } catch(e) {
+      debugPrint("DELETE NG");
+    }
+  }
+
   Future deleteTemporaryImages() async {
     String temporaryDirectoryPath;
     if( Platform.isAndroid ){
@@ -148,12 +185,6 @@ class _MyHomePageState extends State {
     }
   }
 
-  Future<Image> createImage(XFile imageFile) async {
-    debugPrint(imageFile.path);
-    File file = File.fromUri(Uri.file(imageFile.path));
-    return Image.memory(file.readAsBytesSync());
-  }
-
   Future<Size> getImageSize(Image image) async {
     Completer<Size> completer = Completer<Size>();
     ImageProvider<Object> imageProvider = image.image;
@@ -167,37 +198,6 @@ class _MyHomePageState extends State {
       completer.complete(size);
     }));
     return completer.future;
-  }
-
-  Future saveImage(XFile imageFile, String fileName) async {
-    Directory directory = await getApplicationDocumentsDirectory();
-    String path = directory.path;
-
-    File file = File.fromUri(Uri.file(imageFile.path));
-    File saveFile = File('$path/$fileName');
-    await saveFile.writeAsBytes(await file.readAsBytes());
-  }
-
-  Future deleteImage(XFile imageFile) async {
-    File file = File.fromUri(Uri.file(imageFile.path));
-    try {
-      debugPrint(imageFile.path);
-      await file.delete();
-      debugPrint("DELETE OK");
-    } catch(e) {
-      debugPrint("DELETE NG");
-    }
-  }
-
-  Future<Image?> loadImage(String fileName) async {
-    Directory directory = await getApplicationDocumentsDirectory();
-    String path = directory.path;
-
-    File file = File('$path/$fileName');
-    if( file.existsSync() ) {
-      return Image.memory(file.readAsBytesSync());
-    }
-    return null;
   }
 
   void update(Image image) async {
