@@ -48,7 +48,7 @@ class _MyHomePageState extends State {
   void initState() {
     super.initState();
     deleteTemporaryImages();
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       Image? image = await loadImage(localFileName);
       if( image != null ){
         update(image);
