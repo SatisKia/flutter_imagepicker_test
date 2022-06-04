@@ -44,10 +44,10 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>�t�H�g���C�u�����ւ̃A�N�Z�X�����߂Ă��܂��B</string>
+	<string>フォトライブラリへのアクセスを求めています。</string>
 	<key>NSCameraUsageDescription</key>
-	<string>�J�����ւ̃A�N�Z�X�����߂Ă��܂��B</string>
+	<string>カメラへのアクセスを求めています。</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>�}�C�N�ւ̃A�N�Z�X�����߂Ă��܂��B</string>
+	<string>マイクへのアクセスを求めています。</string>
 </dict>
 </plist>
